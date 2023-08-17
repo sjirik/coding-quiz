@@ -1,0 +1,106 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body{
+  background: purple;
+}
+
+::selection{
+  color: #fff;
+  background: purple;
+}
+
+.begin button,
+.container_one,
+.container_two,
+.results.activeResult{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 8px 0 green, 
+              0 6px 20px 0 green;
+}
+
+.container_one.activeInfo,
+.container_two.activeQuiz,
+.results.activeResult{
+  opacity: 1;
+  z-index: 5;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.begin button{
+  font-size: 25px;
+  font-weight: 500;
+  color: green;
+  padding: 15px 30px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background: yellow;
+  cursor: pointer;
+}
+
+.container_one{
+  width: 540px;
+  background: yellow;
+  border-radius: 5px;
+  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.container_one .title-one{
+  height: 60px;
+  width: 100%;
+  border-bottom: 1px solid;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  border-radius: 5px 5px 0 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.container_one .info-one{
+  padding: 15px 30px;
+}
+
+.container_one .info-one .info{
+  margin: 5px 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: green;
+}
+
+
+.container_one .buttons{
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 30px;
+  border-top: 1px solid;
+}
+
+.container_one .buttons button{
+  margin: 0 5px;
+  height: 40px;
+  width: 100px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid green;
+  transition: all 0.3s ease;
+}
