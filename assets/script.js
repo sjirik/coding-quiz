@@ -95,6 +95,20 @@ function optionSelected(answer){
     next_button.classList.add("show"); 
 }
 
+function showResult(){
+    containerOne.classList.remove("activeInfo"); 
+    containerTwo.classList.remove("activeQuiz"); 
+    results.classList.add("activeResult"); 
+    const scoreText = results.querySelector(".score_text");
+    if (userScore > 1){ 
+        let scoreTag = '<span>and Hooray, You got <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        scoreText.innerHTML = scoreTag;
+    }
+    else{ 
+        let scoreTag = '<span>and oops! You got only <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        scoreText.innerHTML = scoreTag;
+    }
+}
 
 function startTimer(time){
     counter = setInterval(timer, 1000);
