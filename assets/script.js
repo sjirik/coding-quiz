@@ -18,8 +18,8 @@ beginQuiz.onclick = ()=>{
 continueOne.onclick = ()=>{
     containerOne.classList.remove("activeInfo"); 
     containerTwo.classList.add("activeQuiz"); 
-    showQuetions(0); 
-    queCounter(1); 
+    showQuestion(0); 
+    queCount(1); 
 }
 
 let timeV =  60;
@@ -30,24 +30,50 @@ let counter;
 let counterLine;
 let widthValue = 0;
 
+var restart_q = results.querySelector(".buttons .restart");
+var quit_q = results.querySelector(".buttons .quit");
+
+restart_q.onclick = ()=>{
+    containerTwo.classList.add("activeQuiz"); 
+    results.classList.remove("activeResult"); 
+    timeV = 60; 
+    que_count = 0;
+    que_numb = 1;
+    userScore = 0;
+    widthValue = 0;
+    showQuestion(que_count); 
+    queCount(que_numb); 
+    clearInterval(counter);
+    startTimer(60);
+    startTimerLine(0);
+    timeText.textContent = "Time Left"; 
+    next_button.classList.remove("show"); 
+}
+
+
+quit_q.onclick = ()=>{
+    window.location.reload(); 
+}
+
+var next_button = document.querySelector(".next");
+var ques_counter = document.querySelector(".questions_left");
+
 
 next_button.onclick = ()=>{
     if(que_count < questions.length - 1){ 
         que_count++; 
         que_numb++; 
-        showQuetions(que_count); 
-        queCounter(que_numb); 
-        startTimer(timeV); 
-        startTimerLine(widthValue); 
+        showQuestion(que_count); 
+        queCount(que_numb); 
         timeText.textContent = "Time Left"; 
         next_button.classList.remove("show"); 
     }else{
-        showResult(); 
+        showResults(); 
     }
 }
 
 
-function showQuetions(index){
+function showQuestion(index){
     var que_text = document.querySelector(".question_text");
     let que_tag = '<span>'+ questions[index].numb + ". " + questions[index].question +'</span>';
     let option_tag = '<div class="option"><span>'+ questions[index].options[0] +'</span></div>'
@@ -58,54 +84,44 @@ function showQuetions(index){
     option_list.innerHTML = option_tag; 
     var option = option_list.querySelectorAll(".option");
     for(i=0; i < option.length; i++){
-        option[i].setAttribute("onclick", "optionSelected(this)");
+        option[i].setAttribute("onclick", "optionS(this)");
     }
 }
 
-let tickIconTag = '<div class="icon tick"><i class="fas fa-check"></i></div>';
-let crossIconTag = '<div class="icon cross"><i class="fas fa-times"></i></div>';
+let tickIcon = '<div class="icon tick"><i class="fas fa-check"></i></div>';
+let crossIcon = '<div class="icon cross"><i class="fas fa-times"></i></div>';
 
 
-function optionSelected(answer){
+function optionS(answer){
     let userAns = answer.textContent;
     let correcAns = questions[que_count].answer; 
     var allOptions = option_list.children.length; 
     if(userAns == correcAns){ 
         userScore += 1; 
         answer.classList.add("correct"); 
-        answer.insertAdjacentHTML("beforeend", tickIconTag); 
-        console.log("Correct Answer");
-        console.log("Your correct answers = " + userScore);
+        answer.insertAdjacentHTML("beforeend", tickIcon); 
     }else{
         answer.classList.add("incorrect"); 
-        answer.insertAdjacentHTML("beforeend", crossIconTag); 
-        console.log("Wrong Answer");
-
-        for(i=0; i < allOptions; i++){
-            if(option_list.children[i].textContent == correcAns){  
-                option_list.children[i].setAttribute("class", "option correct"); 
-                option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); 
-                console.log("Auto selected correct answer.");
-            }
+        answer.insertAdjacentHTML("beforeend", crossIcon); 
         }
-    }
+        
     for(i=0; i < allOptions; i++){
         option_list.children[i].classList.add("disabled"); 
     }
     next_button.classList.add("show"); 
 }
 
-function showResult(){
+function showResults(){
     containerOne.classList.remove("activeInfo"); 
     containerTwo.classList.remove("activeQuiz"); 
     results.classList.add("activeResult"); 
     const scoreText = results.querySelector(".score_text");
     if (userScore > 1){ 
-        let scoreTag = '<span>and Hooray, You got <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        let scoreTag = 'Hooray! You got '+ userScore +' out of '+ questions.length +'!';
         scoreText.innerHTML = scoreTag;
     }
     else{ 
-        let scoreTag = '<span>and oops! You got only <p>'+ userScore +'</p> out of <p>'+ questions.length +'</p></span>';
+        let scoreTag = 'Oops! You got only '+ userScore +' out of '+ questions.length +'!';
         scoreText.innerHTML = scoreTag;
     }
 }
@@ -143,7 +159,7 @@ function startTimerLine(time){
     }
 }
 
-function queCounter(index){
+function queCount(index){
     let totalQueCounTag = '<span><p>'+ index +'</p> of <p>'+ questions.length +'</p> Questions</span>';
     ques_counter.innerHTML = totalQueCounTag;
 }
